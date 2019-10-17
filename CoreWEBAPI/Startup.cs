@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using CoreWEBAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoreWEBAPI
 {
@@ -34,6 +36,14 @@ namespace CoreWEBAPI
         // scopped() and Transient()
         public void ConfigureServices(IServiceCollection services)
         {
+            // register the DbContext in the DI Container and 
+            // pass the connectionstring to it
+            // thois will be registered as scoped obnject in DI
+            services.AddDbContext<StudentDbContext>(
+                  options => options.UseSqlServer(
+                      Configuration.GetConnectionString("AppConnection"))
+                );
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
