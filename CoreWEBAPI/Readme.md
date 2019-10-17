@@ -52,3 +52,26 @@ Snapshot file will contain the Table DDL Statement
 
 dotnet ef database update -c <Namespace based path of DbContext class>
 
+#=============================================================================================
+WEB API Core
+1. The Class that is accessed over Http Request. This is Http Service that
+contains HTTP mapped methods
+	Get() /Post()/ Put()/ Delete
+2. WEB API COre has
+	1. ControllerBase, the base class for WEP API
+		HttpRequest Processing
+		Model Validations in Post and Put request using 'ModelState' property
+		IPrincipal object, used for Authorization
+		HttpContext, object that represents Http Request and Response
+	2. Each Http Method returns IActionResult type
+		The IActionResult is as follows
+			Ok()
+			Ok(object) with OkResult Type, JSON serialization of the Response
+			NotFound() / BasRequest() / NoCOntent() / Conflict()
+	3. API Controller class is applied with [ApiController] attribute
+		The ApiControllerAttribute class performs following
+			1. Map the Request Body of Post and Put request from JSON to CLR Object
+			2. Perorms Model Binding with Validation
+
+
+
