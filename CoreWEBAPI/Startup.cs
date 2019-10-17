@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using CoreWEBAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using CoreWEBAPI.Services;
 
 namespace CoreWEBAPI
 {
@@ -43,6 +44,9 @@ namespace CoreWEBAPI
                   options => options.UseSqlServer(
                       Configuration.GetConnectionString("AppConnection"))
                 );
+
+            // register the StudentService in DI Container as scoped
+            services.AddScoped<IService<Student, int>, StudentService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

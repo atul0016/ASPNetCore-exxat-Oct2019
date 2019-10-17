@@ -36,3 +36,19 @@
 
 Register the DbContext in the DI for the application 
 
+#============================================================================================
+Generate Database using EFCore Migrations
+1. Generate Migration Class and its metadata
+
+dotnet ef migrations add <NAME-OF-THE-MIGRATION> -c <Namespace based path of DbContext class>
+
+The above command will generate, the SnapshotFile and the MigrationDefinition file
+
+MigrationDefinition file will contains the Class-Mapping with Table
+Snapshot file will contain the Table DDL Statement
+
+
+2. To Create Database from the Migration Metadata file
+
+dotnet ef database update -c <Namespace based path of DbContext class>
+

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CoreWEBAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoreWEBAPI.Services
 {
@@ -52,19 +53,55 @@ namespace CoreWEBAPI.Services
             }
         }
 
-        public Task<IEnumerable<Student>> GetAsync()
+        public async Task<IEnumerable<Student>> GetAsync()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var res = await _ctx.Students.ToListAsync();
+                return res;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public Task<Student> GetAsync(int id)
+        public async Task<Student> GetAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var res = await _ctx.Students.FindAsync(id);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public Task<Student> UpdateAsync(int id, Student enity)
+        public async Task<Student> UpdateAsync(int id, Student enity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var res = await _ctx.Students.FindAsync(id);
+                if (res != null)
+                {
+                    res.StudentName = enity.StudentName;
+                    res.CourseName = enity.CourseName;
+                    res.EducationYear = enity.EducationYear;
+                    res.University = enity.University;
+                    await _ctx.SaveChangesAsync();
+                    return res;
+                }
+                else
+                {
+                    return enity;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            } 
         }
     }
 }
